@@ -1,0 +1,10 @@
+varsion: 1
+datastore:
+  user: root
+  password: Latinboyjay1
+  hostname: localhost
+  port: 3306
+  db: events
+  server: localhost
+  port2: 9092
+  topic: events

@@ -1,0 +1,134 @@
+swagger: '2.0'
+info:
+  description: This is an API for humidity and temperature report
+  version: 1.0.0
+  title: humidity and temperature API
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+paths:
+  /humidity:
+
+
+    get:
+      summary: gets humidity reading
+      operationId: app.get_humidity
+      description: Stores a humidity reading
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: startDate
+        description: pass an optional search string for looking up the event
+        required: false
+        type: string
+        format: date-time
+      - in: query
+        name: endDate
+        description: pass an optional search string for looking up the event
+        required: false
+        type: string
+        format: date-time
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/HumidityReading'
+        400:
+          description: bad input parameter
+
+  /temperature:
+
+
+    get:
+      summary: gets temperature reading
+      operationId: app.get_temperature
+      description: Stores a temperature reading
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: startDate
+        description: pass an optional search string for looking up the event
+        required: false
+        type: string
+        format: date-time
+      - in: query
+        name: endDate
+        description: pass an optional search string for looking up the event
+        required: false
+        type: string
+        format: date-time
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TemperatureReading'
+        400:
+          description: bad input parameter
+
+definitions:
+  HumidityReading:
+    type: object
+    required:
+    - user_id
+    - device_id
+    - humidity
+    - timestamp
+    properties:
+      user_id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      device_id:
+        type: string
+        example: A12345
+      humidity:
+        type: integer
+        example: 91
+      timestamp:
+        type: string
+        format: date-time
+        example: 2016-08-29T09:12:33.001Z
+
+  TemperatureReading:
+    type: object
+    required:
+    - user_id
+    - device_id
+    - temperature
+    - timestamp
+    properties:
+      user_id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      device_id:
+        type: string
+        example: A12345
+      temperature:
+        $ref: '#/definitions/Temperature'
+      timestamp:
+        type: string
+        format: date-time
+        example: 2016-08-29T09:12:33.001Z
+
+  Temperature:
+    required:
+    - high
+    - low
+    properties:
+      high:
+        type: integer
+        example: 30
+      low:
+        type: integer
+        example: 10
+
+
